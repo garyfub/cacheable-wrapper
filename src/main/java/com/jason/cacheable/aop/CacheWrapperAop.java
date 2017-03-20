@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 public class CacheWrapperAop {
 
     @Autowired
-    private Jedis jedis;
+    private Jedis jedis;//// TODO: 17/3/20 jedis换成ICacheClient,缓存方案可扩展
 
     @Around(value = "@annotation(com.jason.cacheable.annotation.CacheParam)")
     public Object around(ProceedingJoinPoint pjp) {
@@ -50,6 +50,7 @@ public class CacheWrapperAop {
             result = pjp.proceed(pjp.getArgs());
         } catch (Throwable throwable) {
             throwable.printStackTrace();
+            return result;
         }
 
         if (read) {
