@@ -1,0 +1,3 @@
+# cacheable-wrapper
+读写缓存操作和实际回流操作自动分离
+CacheWrapperAop会对接入函数进行around操作，会自动区分读写逻辑，完成缓存和db之间的交互逻辑，缓存目前采用的是redis
