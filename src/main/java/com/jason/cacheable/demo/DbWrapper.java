@@ -2,6 +2,9 @@ package com.jason.cacheable.demo;
 
 import com.jason.cacheable.annotation.CacheParam;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Desc:
  * ------------------------------------
@@ -13,7 +16,6 @@ public class DbWrapper {
 
     @CacheParam(key = "nbi")
     public String getNameById(int id) {
-        System.out.println("input:" + id);
         return "name" + id;
     }
 
@@ -24,5 +26,10 @@ public class DbWrapper {
     @CacheParam(key = "test")
     public double getRate(){
         return 1.0d;
+    }
+
+    @CacheParam(key = "gnlist")
+    public List<String> getNameList(){
+        return Arrays.asList("1","2");
     }
 }

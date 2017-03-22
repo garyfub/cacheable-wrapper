@@ -42,33 +42,29 @@ public class ObjectUtils {
         return object;
     }
 
-    public static List deserialList(List<String> list, Type type) {
+    public static List deserialList(List<byte[]> list, Type type) {
         Class clazz = ClassMappingByName.getCollectionObjectClass(type);
         if (String.class.equals(clazz)) {
             return list;
         } else {
             List results = Lists.newArrayList();
-            for (String s : list) {
-                results.add(deserialObject(s.getBytes(), clazz));
+            for (byte[] s : list) {
+                results.add(deserialObject(s, clazz));
             }
             return results;
         }
     }
 
-    public static Set deserialSet(Set<String> set, Type type) {
+    public static Set deserialSet(Set<byte[]> set, Type type) {
         Class clazz = ClassMappingByName.getCollectionObjectClass(type);
-        if (String.class.equals(clazz)) {
-            return set;
-        } else {
-            Set results = Sets.newHashSet();
-            for (String s : set) {
-                results.add(deserialObject(s.getBytes(), clazz));
-            }
-            return results;
+        Set results = Sets.newHashSet();
+        for (byte[] s : set) {
+            results.add(deserialObject(s, clazz));
         }
+        return results;
     }
 
-    public static Map deserialMap(Map<String, String> map, Type type) {
+    public static Map deserialMap(Map<byte[], byte[]> map, Type type) {
         Pair pair = ClassMappingByName.getMapObjectClass(type);
         Object key = pair.getKey();
         Object value = pair.getValue();
@@ -76,21 +72,21 @@ public class ObjectUtils {
         boolean valueString = String.class.equals(value.getClass());
 
         Map results = Maps.newHashMap();
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            String sKey = entry.getKey();
+        for (Map.Entry<byte[], byte[]> entry : map.entrySet()) {
+            byte[] sKey = entry.getKey();
             Object k = null;
             if (keyString) {
                 k = sKey;
             } else {
-                k = deserialObject(sKey.getBytes(), key.getClass());
+                k = deserialObject(sKey, key.getClass());
             }
 
-            String sValue = entry.getValue();
+            byte[] sValue = entry.getValue();
             Object v = null;
             if (valueString) {
                 v = sValue;
             } else {
-                v = deserialObject(sValue.getBytes(), value.getClass());
+                v = deserialObject(sValue, value.getClass());
             }
             results.put(k, v);
         }

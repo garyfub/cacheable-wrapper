@@ -53,11 +53,11 @@ public class CacheWrapperAop {
             return result;
         }
 
-//        if (read) {
-//            jedis.set(cacheKey, (String) result);
-//        } else {
-//
-//        }
+        if (read) {
+            JedisTypeDispatch.setValue(jedis, cacheKey, result);
+        } else {
+
+        }
         return result;
     }
 
