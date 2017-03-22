@@ -18,5 +18,4 @@ public @interface CacheParam {
     boolean read() default true;
 
     String key() default "";
-
 }

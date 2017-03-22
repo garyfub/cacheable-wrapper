@@ -3,6 +3,7 @@ package com.jason.cacheable.demo;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+
 /**
  * Desc:
  * ------------------------------------
@@ -17,5 +18,7 @@ public class CacheDemo {
         DbWrapper dbWrapper = (DbWrapper) ctx.getBean("dbWrapper");
         System.out.println(dbWrapper.getNameById(2));
         dbWrapper.setNameById(2, "n");
+
+        System.out.println(dbWrapper.getRate());
     }
 }

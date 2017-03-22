@@ -1,6 +1,7 @@
 package com.jason.cacheable.aop;
 
 import com.jason.cacheable.annotation.CacheParam;
+import com.jason.cacheable.dispatch.JedisTypeDispatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -38,11 +39,10 @@ public class CacheWrapperAop {
         CacheParam annotation = method.getAnnotation(CacheParam.class);
         read = annotation.read();
         String cacheKey = getKey(annotation.key(), pjp.getArgs());
-        Class clazz = method.getReturnType();
         if (read) {
-            Object value = jedis.get(cacheKey);
+            Object value = JedisTypeDispatch.getValue(jedis, cacheKey, method);
             if (value != null) {
-                return jedis.get(cacheKey);
+                return value;
             }
         }
         Object result = null;
@@ -53,11 +53,11 @@ public class CacheWrapperAop {
             return result;
         }
 
-        if (read) {
-            jedis.set(cacheKey, (String) result);
-        } else {
-
-        }
+//        if (read) {
+//            jedis.set(cacheKey, (String) result);
+//        } else {
+//
+//        }
         return result;
     }
 

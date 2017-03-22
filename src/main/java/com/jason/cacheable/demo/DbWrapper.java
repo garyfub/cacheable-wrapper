@@ -20,4 +20,9 @@ public class DbWrapper {
     @CacheParam(key = "nbi", read = false)
     public void setNameById(int id, String name) {
     }
+
+    @CacheParam(key = "test")
+    public double getRate(){
+        return 1.0d;
+    }
 }
