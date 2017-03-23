@@ -44,15 +44,11 @@ public class ObjectUtils {
 
     public static List deserialList(List<byte[]> list, Type type) {
         Class clazz = ClassMappingByName.getCollectionObjectClass(type);
-        if (String.class.equals(clazz)) {
-            return list;
-        } else {
-            List results = Lists.newArrayList();
-            for (byte[] s : list) {
-                results.add(deserialObject(s, clazz));
-            }
-            return results;
+        List results = Lists.newArrayList();
+        for (byte[] s : list) {
+            results.add(deserialObject(s, clazz));
         }
+        return results;
     }
 
     public static Set deserialSet(Set<byte[]> set, Type type) {

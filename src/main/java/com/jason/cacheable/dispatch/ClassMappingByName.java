@@ -30,15 +30,15 @@ public class ClassMappingByName {
         int start = typeName.indexOf("<");
         int end = typeName.lastIndexOf(">");
         final String className = typeName.substring(start + 1, end).trim();
-        String[] clazzs=className.split(",");
-        String keyClazzName=clazzs[0].trim();
-        String valueClazzName=clazzs[1].trim();
-        Class keyClazz=getClassByName(keyClazzName);
-        Class valueClazz=getClassByName(valueClazzName);
-        return Pair.of(keyClazz,valueClazz);
+        String[] clazzs = className.split(",");
+        String keyClazzName = clazzs[0].trim();
+        String valueClazzName = clazzs[1].trim();
+        Class keyClazz = getClassByName(keyClazzName);
+        Class valueClazz = getClassByName(valueClazzName);
+        return Pair.of(keyClazz, valueClazz);
     }
 
-    private static Class getClassByName(String className){
+    private static Class getClassByName(String className) {
         Class clazz = classMap.get(className);
         if (clazz == null) {
             try {

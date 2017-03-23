@@ -21,6 +21,8 @@ public class CacheDemo {
 
         System.out.println(dbWrapper.getRate());
 
-        dbWrapper.getNameList();
+        System.out.println(dbWrapper.getNameList());
+
+        System.out.println(dbWrapper.getNameMap());
     }
 }

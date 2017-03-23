@@ -1,9 +1,11 @@
 package com.jason.cacheable.demo;
 
+import com.google.common.collect.ImmutableMap;
 import com.jason.cacheable.annotation.CacheParam;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Desc:
@@ -31,5 +33,11 @@ public class DbWrapper {
     @CacheParam(key = "gnlist")
     public List<String> getNameList(){
         return Arrays.asList("1","2");
+    }
+
+    @CacheParam(key = "gnmap")
+    public Map<Integer,Double> getNameMap(){
+        Map map = ImmutableMap.builder().put(1, 2d).put(2, 3d).build();
+        return map;
     }
 }

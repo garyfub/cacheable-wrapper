@@ -85,11 +85,11 @@ public class JedisTypeDispatch {
         if (value instanceof List) {
             List list = (List) value;
             if (CollectionUtils.isNotEmpty(list)) {
-                byte[][] bytes=new byte[list.size()][];
-                for (int i=0;i<list.size();i++) {
-                    Object o=list.get(i);
+                byte[][] bytes = new byte[list.size()][];
+                for (int i = 0; i < list.size(); i++) {
+                    Object o = list.get(i);
                     byte[] v = ObjectUtils.serialObject(o, o.getClass());
-                    bytes[i]=v;
+                    bytes[i] = v;
                 }
                 jedis.lpush(key.getBytes(), bytes);
                 jedis.expire(key.getBytes(), EXPIRE_SECONDS);
