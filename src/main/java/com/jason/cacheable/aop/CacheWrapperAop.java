@@ -25,6 +25,11 @@ public class CacheWrapperAop {
     @Autowired
     private Jedis jedis;//// TODO: 17/3/20 jedis换成ICacheClient,缓存方案可扩展
 
+    /**
+     * 读:先读缓存,存在直接返回,不存在load db,回写缓存返回
+     * 写:直接写db,然后删cache
+     * todo 写:更新cache,再写db
+     */
     @Around(value = "@annotation(com.jason.cacheable.annotation.CacheParam)")
     public Object around(ProceedingJoinPoint pjp) {
         boolean read = false;
@@ -50,24 +55,23 @@ public class CacheWrapperAop {
             result = pjp.proceed(pjp.getArgs());
         } catch (Throwable throwable) {
             throwable.printStackTrace();
-            return result;
+            return null;
         }
 
         if (read) {
             JedisTypeDispatch.setValue(jedis, cacheKey, result);
         } else {
-
+            JedisTypeDispatch.delValue(jedis, cacheKey, result);
         }
         return result;
     }
 
     private Method getMethod(ProceedingJoinPoint pjp) throws NoSuchMethodException {
         Signature sig = pjp.getSignature();
-        MethodSignature msig = null;
         if (!(sig instanceof MethodSignature)) {
             throw new IllegalArgumentException("该注解只能用于方法");
         }
-        msig = (MethodSignature) sig;
+        MethodSignature msig = (MethodSignature) sig;
         Object target = pjp.getTarget();
         return target.getClass().getMethod(msig.getName(), msig.getParameterTypes());
     }

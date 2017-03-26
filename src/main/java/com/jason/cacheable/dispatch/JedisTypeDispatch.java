@@ -132,4 +132,13 @@ public class JedisTypeDispatch {
             jedis.expire(key.getBytes(), EXPIRE_SECONDS);
         }
     }
+
+    public static void delValue(Jedis jedis, String key, Object value){
+        if (value instanceof Integer || value instanceof Double || value instanceof Float
+                || value instanceof String) {
+            jedis.del(key);
+        } else {
+            jedis.del(key.getBytes());
+        }
+    }
 }
